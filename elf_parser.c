@@ -524,12 +524,13 @@ int main( int argc, char ** argv )
     FILE *fp = NULL;
     char *buffer = NULL;
     int i;
-    // pRType rt;
-    
-    // printf( "elf_parser: sizeof(rt)=%lx\n", sizeof(rt) );
-    // rt = &test_data[0];
-    
-    fp = fopen("/home/mhartzell/malware/electroRat/er_lin_1", "rb");
+
+    if( argc < 2 )
+    {
+        return -1;
+    }
+
+    fp = fopen(argv[1], "rb");
     fseek( fp, 0L, SEEK_END );
     lSize = ftell( fp );
     rewind( fp );
@@ -578,10 +579,10 @@ int main( int argc, char ** argv )
 
     for( i = 0; i < g_num_symtab_symbols; ++i )
     {
-        // if( strstr(g_symtab_symbols[i], "go.itab") )
-        // {
-        //     printf("%s\n", g_symtab_symbols[i]);
-        // }
+        if( strstr(g_symtab_symbols[i], "go.itab") )
+        {
+            printf("%s\n", g_symtab_symbols[i]);
+        }
         free( g_symtab_symbols[i] );
     }
     free( g_symtab_symbols );
